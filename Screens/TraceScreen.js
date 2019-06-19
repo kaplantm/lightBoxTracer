@@ -6,58 +6,47 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Button} from 'react-native';
+import React, { Component } from "react";
+import {
+  Platform,
+  Text,
+  View,
+  Button,
+  SafeAreaView,
+  ImagePickerIOS,
+  Dimensions,
+  Image
+} from "react-native";
 import { Navigation } from "react-native-navigation";
+import styles from "../utils/styles";
 import withSafeArea from "../utils/withSafeArea";
+import colors from "../utils/colors";
+import Header from "../Components/Header";
+import Cta from "../Components/Cta";
 
+// Issue popup with info about how to edit trace mode
+//https://kmagiera.github.io/react-native-gesture-handler/docs/handler-tap.html#minpointers
 type Props = {};
 class TraceScreen extends Component<Props> {
-  onClickPop = async () => {
-    await Navigation.pop(this.props.componentId);
+  get imageDimensions() {
+    const { width, height } = Dimensions.get("window");
+    const verticalPadding = 100;
+    return { width, height: height - verticalPadding };
   }
-
-  onClickSwitchToTab() {
-    Navigation.mergeOptions(this.props.componentId, {
-      bottomTabs: {
-        currentTabIndex: 0,
-        // visible: false,
-        drawBehind: true,
-        animate: true
-      }
-    });
-  }
-
   render() {
-      console.log(this.props);
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>TraceScreen</Text>
-        {/* <Text style={styles.instructions}>{this.props.navigationParams.text}</Text> */}
-
-        <Button title={'pop'} onPress={() => this.onClickPop()} />
+      <View style={styles.pageContainer}>
+        <View style={styles.contentContainer}>
+          {this.props.navigationParams && this.props.navigationParams.image ? (
+            <Image
+              style={this.imageDimensions}
+              source={{ uri: this.props.navigationParams.image }}
+            />
+          ) : null}
+        </View>
       </View>
     );
   }
 }
 
 export default withSafeArea(TraceScreen);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

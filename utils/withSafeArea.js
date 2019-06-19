@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { SafeAreaView } from "react-native";
-import { flex } from "./styles";
+import styles, { flex } from "./styles";
 
 const withSafeArea = (Element, options = {}) => {
-    const {style} = options;
+    const style = options.style || styles.safeArea;
   return class extends Component {
     render() {
         console.log(this.props);

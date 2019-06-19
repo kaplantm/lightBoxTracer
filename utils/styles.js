@@ -98,6 +98,9 @@ const styles = StyleSheet.create({
   ctaButtonText: {
     ...styleBits.lightText,
     ...styleBits.mediumFontSize
+  },
+  safeArea: {
+    backgroundColor: colors.offWhite,
   }
 });
 

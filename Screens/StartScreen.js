@@ -7,7 +7,15 @@
  */
 
 import React, { Component } from "react";
-import { Platform, Text, View, Button, SafeAreaView } from "react-native";
+import {
+  Platform,
+  Text,
+  View,
+  Button,
+  SafeAreaView,
+  ImagePickerIOS,
+  Image
+} from "react-native";
 import { Navigation } from "react-native-navigation";
 import styles from "../utils/styles";
 import withSafeArea from "../utils/withSafeArea";
@@ -17,13 +25,25 @@ import Cta from "../Components/Cta";
 
 type Props = {};
 class StartScreen extends Component<Props> {
-  onClickLoadImage = async () => {
+
+  pickImage = () => {
+    // openSelectDialog(config, successCallback, errorCallback);
+    ImagePickerIOS.openSelectDialog(
+      {},
+      imageUri => {
+        this.onClickLoadImage(imageUri);
+      },
+      () => console.log("Cancelled")
+    );
+  }
+
+  onClickLoadImage = async image => {
     await Navigation.push(this.props.componentId, {
       component: {
         passProps: {
           // Props come in keys by name. Wrapping all in navigationParams to group
           navigationParams: {
-            text: "neato!"
+            image
           }
         },
         name: "navigation.playground.TraceScreen"
@@ -32,23 +52,22 @@ class StartScreen extends Component<Props> {
   };
 
   render() {
-    console.log(this.props);
     return (
       <View style={styles.pageContainer}>
-          <View style={styles.contentContainer}>
+        <View style={styles.contentContainer}>
           <Header />
-            <Text style={styles.bodyText}>Select an image to trace.</Text>
-            {/* <Button title="Push" onPress={this.onClickPush} /> */}
-            <Cta text="Load Image" action={this.onClickLoadImage}/>
-          </View>
+          <Text style={styles.bodyText}>Select an image to trace.</Text>
+          <Button title="Push" onPress={this.onClickLoadImage} />
+          <Cta text="Load Image" action={this.pickImage} />
+          {/* {this.state.image?
+          <Image style={{ width: 50, height: 50 }} source={{ uri: this.state.image }} /> :
+          null
+        } */}
+        </View>
       </View>
     );
   }
 }
 
-const safeAreaOptions = {
-  style: { backgroundColor: styles.pageContainer.backgroundColor }
-};
-
 // export default StartScreen;
-export default withSafeArea(StartScreen, safeAreaOptions);
+export default withSafeArea(StartScreen);
