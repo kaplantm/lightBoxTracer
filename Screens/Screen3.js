@@ -23,14 +23,25 @@ export default class App extends Component<Props> {
     });
   }
 
+  onClickPop = async () => {
+    await Navigation.pop(this.props.componentId);
+  }
+
+  onClickPush = async () => {
+    await Navigation.push(this.props.componentId, {
+      component: {
+        name: 'navigation.playground.Screen1'
+      }
+    });
+  }
+
   render() {
       console.log(this.props);
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Screen 2</Text>
+        <Text style={styles.welcome}>Screen 3</Text>
         {/* <Text style={styles.instructions}>{this.props.navigationParams.text}</Text> */}
-
-        <Button title={'Switch To Tab 1'} onPress={() => this.onClickSwitchToTab()} />
+        <Button title='Push' onPress={this.onClickPush} />
       </View>
     );
   }

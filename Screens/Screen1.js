@@ -7,23 +7,37 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button} from 'react-native';
+import { Navigation } from "react-native-navigation";
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
 type Props = {};
 export default class App extends Component<Props> {
+    onClickPop = async () => {
+        await Navigation.pop(this.props.componentId);
+      }
+    
+      onClickPush = async () => {
+        await Navigation.push(this.props.componentId, {
+          component: {
+            passProps: {
+              // Props come in keys by name. Wrapping all in navigationParams to group
+              navigationParams: {
+                text: "neato!"
+              }
+            },
+            name: 'navigation.playground.Screen3'
+          },
+        });
+      }
+
   render() {
       console.log(this.props);
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Screen 1</Text>
-        {/* <Text style={styles.instructions}>{this.props.navigationParams.text}</Text> */}
+        <Text style={styles.instructions}>{this.props.navigationParams ? this.props.navigationParams.text : "no params"}</Text>
+        <Button title='Push' onPress={this.onClickPush} />
       </View>
     );
   }
