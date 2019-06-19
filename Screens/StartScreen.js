@@ -6,56 +6,49 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Button} from 'react-native';
+import React, { Component } from "react";
+import { Platform, Text, View, Button, SafeAreaView } from "react-native";
 import { Navigation } from "react-native-navigation";
-
+import styles from "../utils/styles";
+import withSafeArea from "../utils/withSafeArea";
+import colors from "../utils/colors";
+import Header from "../Components/Header";
+import Cta from "../Components/Cta";
 
 type Props = {};
-export default class App extends Component<Props> {
- 
-    
-      onClickPush = async () => {
-        await Navigation.push(this.props.componentId, {
-          component: {
-            passProps: {
-              // Props come in keys by name. Wrapping all in navigationParams to group
-              navigationParams: {
-                text: "neato!"
-              }
-            },
-            name: 'navigation.playground.TraceScreen'
-          },
-        });
+class StartScreen extends Component<Props> {
+  onClickLoadImage = async () => {
+    await Navigation.push(this.props.componentId, {
+      component: {
+        passProps: {
+          // Props come in keys by name. Wrapping all in navigationParams to group
+          navigationParams: {
+            text: "neato!"
+          }
+        },
+        name: "navigation.playground.TraceScreen"
       }
+    });
+  };
 
   render() {
-      console.log(this.props);
+    console.log(this.props);
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Start screen</Text>
-        <Text style={styles.instructions}>{this.props.navigationParams ? this.props.navigationParams.text : "no params"}</Text>
-        <Button title='Push' onPress={this.onClickPush} />
+      <View style={styles.pageContainer}>
+          <View style={styles.contentContainer}>
+          <Header />
+            <Text style={styles.bodyText}>Select an image to trace.</Text>
+            {/* <Button title="Push" onPress={this.onClickPush} /> */}
+            <Cta text="Load Image" action={this.onClickLoadImage}/>
+          </View>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+const safeAreaOptions = {
+  style: { backgroundColor: styles.pageContainer.backgroundColor }
+};
+
+// export default StartScreen;
+export default withSafeArea(StartScreen, safeAreaOptions);

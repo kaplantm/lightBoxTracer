@@ -9,9 +9,10 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import { Navigation } from "react-native-navigation";
+import withSafeArea from "../utils/withSafeArea";
 
 type Props = {};
-export default class App extends Component<Props> {
+class TraceScreen extends Component<Props> {
   onClickPop = async () => {
     await Navigation.pop(this.props.componentId);
   }
@@ -39,6 +40,8 @@ export default class App extends Component<Props> {
     );
   }
 }
+
+export default withSafeArea(TraceScreen);
 
 const styles = StyleSheet.create({
   container: {
