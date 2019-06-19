@@ -12,6 +12,10 @@ import { Navigation } from "react-native-navigation";
 
 type Props = {};
 export default class App extends Component<Props> {
+  onClickPop = async () => {
+    await Navigation.pop(this.props.componentId);
+  }
+
   onClickSwitchToTab() {
     Navigation.mergeOptions(this.props.componentId, {
       bottomTabs: {
@@ -27,10 +31,10 @@ export default class App extends Component<Props> {
       console.log(this.props);
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Screen 2</Text>
+        <Text style={styles.welcome}>TraceScreen</Text>
         {/* <Text style={styles.instructions}>{this.props.navigationParams.text}</Text> */}
 
-        <Button title={'Switch To Tab 1'} onPress={() => this.onClickSwitchToTab()} />
+        <Button title={'pop'} onPress={() => this.onClickPop()} />
       </View>
     );
   }

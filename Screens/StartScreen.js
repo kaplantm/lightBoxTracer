@@ -13,9 +13,7 @@ import { Navigation } from "react-native-navigation";
 
 type Props = {};
 export default class App extends Component<Props> {
-    onClickPop = async () => {
-        await Navigation.pop(this.props.componentId);
-      }
+ 
     
       onClickPush = async () => {
         await Navigation.push(this.props.componentId, {
@@ -26,7 +24,7 @@ export default class App extends Component<Props> {
                 text: "neato!"
               }
             },
-            name: 'navigation.playground.Screen3'
+            name: 'navigation.playground.TraceScreen'
           },
         });
       }
@@ -35,7 +33,7 @@ export default class App extends Component<Props> {
       console.log(this.props);
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Screen 1</Text>
+        <Text style={styles.welcome}>Start screen</Text>
         <Text style={styles.instructions}>{this.props.navigationParams ? this.props.navigationParams.text : "no params"}</Text>
         <Button title='Push' onPress={this.onClickPush} />
       </View>
