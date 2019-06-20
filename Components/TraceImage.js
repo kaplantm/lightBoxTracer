@@ -19,11 +19,46 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
+import {
+  Grayscale,
+  Sepia,
+  Tint,
+  ColorMatrix,
+  concatColorMatrices,
+  invert,
+  contrast,
+  saturate,
+} from 'react-native-color-matrix-image-filters';
 import styles from '../utils/styles';
 import withSafeArea from '../utils/withSafeArea';
 import colors from '../utils/colors';
 import Header from './Header';
 import Cta from './Cta';
+
+// TODO need to make sure we await camera permissions? didn't work correctly first time when asking for camera permissions
+// maybe ask for camera roll permissions at startup?
+const GrayscaledImage = (imageProps) => (
+  <Grayscale>
+    <Image {...imageProps} />
+  </Grayscale>
+);
+
+const CombinedFiltersImage = (imageProps) => (
+  <Tint amount={1.25}>
+    <Sepia>
+      <Image {...imageProps} />
+    </Sepia>
+  </Tint>
+);
+
+const ColorMatrixImage = (imageProps) => (
+  <ColorMatrix
+    matrix={concatColorMatrices([saturate(-0.9), contrast(5.2), invert()])}
+    // alt: matrix={[saturate(-0.9), contrast(5.2), invert()]}
+  >
+    <Image {...imageProps} />
+  </ColorMatrix>
+);
 
 // Issue popup with info about how to edit trace mode
 // https://kmagiera.github.io/react-native-gesture-handler/docs/handler-tap.html#minpointers
@@ -61,13 +96,15 @@ class TraceImage extends Component<Props> {
 
   renderImage = () => {
     const { image, width, height } = this.props;
-
+    const imageProps = {
+      source: {
+        uri: image,
+      },
+      style: { width, height } };
     return (
-      <Image
-        style={{ width, height }}
-        resizeMode="contain"
-        source={{ uri: image }}
-      />
+      <SafeAreaView>
+        {ColorMatrixImage(imageProps)}
+      </SafeAreaView>
     );
   }
 
