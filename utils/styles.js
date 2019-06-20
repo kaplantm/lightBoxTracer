@@ -1,53 +1,53 @@
-import { StyleSheet } from "react-native";
-import colors from "./colors";
+import { StyleSheet } from 'react-native';
+import colors from './colors';
 
 const styleBits = {
   flex: {
-    flex: 1
+    flex: 1,
   },
   padded: {
-    padding: 20
+    padding: 20,
   },
   centerText: {
-    textAlign: "center"
+    textAlign: 'center',
   },
   largeFontSize: {
-    fontSize: 25
+    fontSize: 25,
   },
   mediumFontSize: {
-    fontSize: 20
+    fontSize: 20,
   },
   regularFontSize: {
-    fontSize: 15
+    fontSize: 15,
   },
   lightText: {
-    color: colors.white
+    color: colors.white,
   },
   darkText: {
-    color: colors.slate
+    color: colors.slate,
   },
   shaded: {
     shadowColor: colors.slate,
     shadowOffset: {
       width: 0,
-      height: 0
+      height: 0,
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
 
-    elevation: 3
+    elevation: 3,
   },
   alignCenter: {
-    alignItems: "center"
+    alignItems: 'center',
   },
   justifyCenter: {
-    justifyContent: "center"
+    justifyContent: 'center',
   },
   verticalMargins: {
     marginTop: 40,
     marginBottom: 40,
 
-  }
+  },
 };
 
 const styles = StyleSheet.create({
@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
     ...styleBits.alignCenter,
   },
   contentContainer: {
+    ...styleBits.flex,
+    width: '100%',
     ...styleBits.padded,
     ...styleBits.justifyCenter,
     ...styleBits.alignCenter,
@@ -74,14 +76,14 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     borderBottomColor: colors.apricot,
-    borderBottomWidth: 5
+    borderBottomWidth: 5,
   },
   headerText: {
     ...styleBits.centerText,
     ...styleBits.largeFontSize,
     ...styleBits.darkText,
-    fontWeight: "700",
-    letterSpacing: 2
+    fontWeight: '700',
+    letterSpacing: 2,
   },
   bodyText: {
     ...styleBits.regularFontSize,
@@ -97,11 +99,11 @@ const styles = StyleSheet.create({
   },
   ctaButtonText: {
     ...styleBits.lightText,
-    ...styleBits.mediumFontSize
+    ...styleBits.mediumFontSize,
   },
   safeArea: {
     backgroundColor: colors.offWhite,
-  }
+  },
 });
 
 export default styles;
