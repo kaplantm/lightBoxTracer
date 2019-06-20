@@ -6,25 +6,25 @@
  * @flow
  */
 
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
-  Platform,
   Text,
   View,
   Button,
-  SafeAreaView,
   ImagePickerIOS,
-  Image
-} from "react-native";
-import { Navigation } from "react-native-navigation";
-import styles from "../utils/styles";
-import withSafeArea from "../utils/withSafeArea";
-import colors from "../utils/colors";
-import Header from "../Components/Header";
-import Cta from "../Components/Cta";
+} from 'react-native';
+import PropTypes from 'prop-types';
+import { Navigation } from 'react-native-navigation';
+import styles from '../utils/styles';
+import withSafeArea from '../utils/withSafeArea';
+import Header from '../Components/Header';
+import Cta from '../Components/Cta';
 
 type Props = {};
 class StartScreen extends Component<Props> {
+  static propTypes = {
+    componentId: PropTypes.string,
+  };
 
   pickImage = () => {
     // openSelectDialog(config, successCallback, errorCallback);
@@ -33,21 +33,22 @@ class StartScreen extends Component<Props> {
       imageUri => {
         this.onClickLoadImage(imageUri);
       },
-      () => console.log("Cancelled")
+      () => console.log('Cancelled'),
     );
   }
 
   onClickLoadImage = async image => {
-    await Navigation.push(this.props.componentId, {
+    const { componentId } = this.props;
+    await Navigation.push(componentId, {
       component: {
         passProps: {
           // Props come in keys by name. Wrapping all in navigationParams to group
           navigationParams: {
-            image
-          }
+            image,
+          },
         },
-        name: "navigation.playground.TraceScreen"
-      }
+        name: 'navigation.playground.TraceScreen',
+      },
     });
   };
 

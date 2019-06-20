@@ -10,32 +10,32 @@
 
 // require('./Screens/index.js');
 
-import { Navigation } from "react-native-navigation";
-import registerScreens from "./Screens/index.js";
+import { Navigation } from 'react-native-navigation';
+import registerScreens from './Screens';
 
 registerScreens();
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({
-root: {
-  stack: {
-    options: {
-      topBar: {
-        visible: false
-      }
-    },
+    root: {
+      stack: {
+        options: {
+          topBar: {
+            visible: false,
+          },
+        },
         children: [
           {
             component: {
-              name: "navigation.playground.StartScreen",
+              name: 'navigation.playground.StartScreen',
               passProps: {
-                text: "This is tab 1",
-                myFunction: () => "Hello from a function!"
-              }
-            }
+                text: 'This is tab 1',
+                myFunction: () => 'Hello from a function!',
+              },
+            },
           },
-        ]
-      }
-    }
+        ],
+      },
+    },
   });
 });
