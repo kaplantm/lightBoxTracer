@@ -1,7 +1,10 @@
 import { StyleSheet } from 'react-native';
 import colors from './colors';
 
-const styleBits = {
+const themeBits = {
+  noFlex: {
+    flex: 0,
+  },
   flex: {
     flex: 1,
   },
@@ -32,7 +35,7 @@ const styleBits = {
       width: 0,
       height: 0,
     },
-    shadowOpacity: 0.22,
+    shadowOpacity: 1,
     shadowRadius: 2.22,
 
     elevation: 3,
@@ -50,60 +53,59 @@ const styleBits = {
   },
 };
 
-const styles = StyleSheet.create({
-  ...styleBits,
+const theme = StyleSheet.create({
+  ...themeBits,
   pageContainer: {
-    flex: 1,
     backgroundColor: colors.offWhite,
-    ...styleBits.justifyCenter,
-    ...styleBits.alignCenter,
+    ...themeBits.justifyCenter,
+    ...themeBits.alignCenter,
   },
   contentContainer: {
-    ...styleBits.flex,
+    ...themeBits.flex,
     width: '100%',
-    ...styleBits.padded,
-    ...styleBits.justifyCenter,
-    ...styleBits.alignCenter,
-    ...styleBits.shaded,
+    ...themeBits.padded,
+    ...themeBits.justifyCenter,
+    ...themeBits.alignCenter,
+    ...themeBits.shaded,
     // flex: 1,
 
     backgroundColor: colors.white,
     // backgroundColor: 'red',
   },
   header: {
-    ...styleBits.padded,
-    ...styleBits.verticalMargins,
+    ...themeBits.padded,
+    ...themeBits.verticalMargins,
     paddingTop: 10,
     paddingBottom: 10,
     borderBottomColor: colors.apricot,
     borderBottomWidth: 5,
   },
   headerText: {
-    ...styleBits.centerText,
-    ...styleBits.largeFontSize,
-    ...styleBits.darkText,
+    ...themeBits.centerText,
+    ...themeBits.largeFontSize,
+    ...themeBits.darkText,
     fontWeight: '700',
     letterSpacing: 2,
   },
   bodyText: {
-    ...styleBits.regularFontSize,
-    ...styleBits.darkText,
+    ...themeBits.regularFontSize,
+    ...themeBits.darkText,
   },
   ctaButton: {
-    ...styleBits.padded,
-    ...styleBits.shaded,
+    ...themeBits.padded,
+    ...themeBits.shaded,
     paddingLeft: 40,
     paddingRight: 40,
     backgroundColor: colors.apricot,
-    ...styleBits.verticalMargins,
+    ...themeBits.verticalMargins,
   },
   ctaButtonText: {
-    ...styleBits.lightText,
-    ...styleBits.mediumFontSize,
+    ...themeBits.lightText,
+    ...themeBits.mediumFontSize,
   },
   safeArea: {
     backgroundColor: colors.offWhite,
   },
 });
 
-export default styles;
+export default theme;

@@ -15,10 +15,11 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
-import styles from '../utils/styles';
+import theme from '../utils/theme';
 import withSafeArea from '../utils/withSafeArea';
 import Header from '../Components/Header';
 import Cta from '../Components/Cta';
+import Container from '../Components/Container';
 
 type Props = {};
 class StartScreen extends Component<Props> {
@@ -54,10 +55,10 @@ class StartScreen extends Component<Props> {
 
   render() {
     return (
-      <View style={styles.pageContainer}>
-        <View style={styles.contentContainer}>
+      <Container styles={[theme.pageContainer]}>
+        <View style={theme.contentContainer}>
           <Header />
-          <Text style={styles.bodyText}>Select an image to trace.</Text>
+          <Text style={theme.bodyText}>Select an image to trace.</Text>
           <Button title="Push" onPress={this.onClickLoadImage} />
           <Cta text="Load Image" action={this.pickImage} />
           {/* {this.state.image?
@@ -65,7 +66,7 @@ class StartScreen extends Component<Props> {
           null
         } */}
         </View>
-      </View>
+      </Container>
     );
   }
 }

@@ -1,15 +1,15 @@
-import { Navigation } from "react-native-navigation";
-import StartScreen from "./StartScreen";
-import TraceScreen from "./TraceScreen";
+import { Navigation } from 'react-native-navigation';
+import StartScreen from './StartScreen';
+import TraceScreen from './TraceScreen';
 
 const registerScreens = () => {
   Navigation.registerComponent(
-    `navigation.playground.StartScreen`,
-    () => StartScreen
+    'navigation.playground.StartScreen',
+    () => StartScreen,
   );
   Navigation.registerComponent(
-    `navigation.playground.TraceScreen`,
-    () => TraceScreen
+    'navigation.playground.TraceScreen',
+    () => TraceScreen,
   );
 };
 

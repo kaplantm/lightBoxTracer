@@ -25,6 +25,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		2603F39F22B810C900B4FBDE /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2603F39C22B80FDE00B4FBDE /* libReactNativeNavigation.a */; };
 		265FFC6622BC04C400BC6C57 /* libRNColorMatrixImageFilters.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 265FFC6522BC04BB00BC6C57 /* libRNColorMatrixImageFilters.a */; };
+		265FFCA522BC79D900BC6C57 /* libRNCSlider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 265FFCA422BC79CF00BC6C57 /* libRNCSlider.a */; };
 		26CDBC5722B9E924001B9EA6 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26CDBC5622B9E89D001B9EA6 /* libRCTCameraRoll.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -157,6 +158,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNColorMatrixImageFilters;
+		};
+		265FFCA322BC79CF00BC6C57 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 265FFC7622BC79CF00BC6C57 /* RNCSlider.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 28C79A09220DC4CC0061DE82;
+			remoteInfo = RNCSlider;
 		};
 		26CDBC5522B9E89D001B9EA6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -371,6 +379,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		2603F36922B80FDE00B4FBDE /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		265FFC3822BC04BB00BC6C57 /* RNColorMatrixImageFilters.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNColorMatrixImageFilters.xcodeproj; path = "../node_modules/react-native-color-matrix-image-filters/ios/RNColorMatrixImageFilters.xcodeproj"; sourceTree = "<group>"; };
+		265FFC7622BC79CF00BC6C57 /* RNCSlider.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCSlider.xcodeproj; path = "../node_modules/@react-native-community/slider/ios/RNCSlider.xcodeproj"; sourceTree = "<group>"; };
 		26CDBC5122B9E89D001B9EA6 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* nativeNavigation-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nativeNavigation-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* nativeNavigation-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nativeNavigation-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -406,6 +415,7 @@
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				2603F39F22B810C900B4FBDE /* libReactNativeNavigation.a in Frameworks */,
 				265FFC6622BC04C400BC6C57 /* libRNColorMatrixImageFilters.a in Frameworks */,
+				265FFCA522BC79D900BC6C57 /* libRNCSlider.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
@@ -575,6 +585,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		265FFC7722BC79CF00BC6C57 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				265FFCA422BC79CF00BC6C57 /* libRNCSlider.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		26CDBC5222B9E89D001B9EA6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -614,6 +632,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				265FFC7622BC79CF00BC6C57 /* RNCSlider.xcodeproj */,
 				265FFC3822BC04BB00BC6C57 /* RNColorMatrixImageFilters.xcodeproj */,
 				26CDBC5122B9E89D001B9EA6 /* RCTCameraRoll.xcodeproj */,
 				2603F36922B80FDE00B4FBDE /* ReactNativeNavigation.xcodeproj */,
@@ -847,6 +866,10 @@
 					ProductGroup = 265FFC3922BC04BB00BC6C57 /* Products */;
 					ProjectRef = 265FFC3822BC04BB00BC6C57 /* RNColorMatrixImageFilters.xcodeproj */;
 				},
+				{
+					ProductGroup = 265FFC7722BC79CF00BC6C57 /* Products */;
+					ProjectRef = 265FFC7622BC79CF00BC6C57 /* RNCSlider.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -962,6 +985,13 @@
 			fileType = archive.ar;
 			path = libRNColorMatrixImageFilters.a;
 			remoteRef = 265FFC6422BC04BB00BC6C57 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		265FFCA422BC79CF00BC6C57 /* libRNCSlider.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCSlider.a;
+			remoteRef = 265FFCA322BC79CF00BC6C57 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		26CDBC5622B9E89D001B9EA6 /* libRCTCameraRoll.a */ = {

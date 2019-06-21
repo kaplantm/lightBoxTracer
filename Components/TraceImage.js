@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
+import Slider from '@react-native-community/slider';
 import {
   Grayscale,
   Sepia,
@@ -29,14 +30,16 @@ import {
   contrast,
   saturate,
 } from 'react-native-color-matrix-image-filters';
-import styles from '../utils/styles';
+import theme from '../utils/theme';
 import withSafeArea from '../utils/withSafeArea';
 import colors from '../utils/colors';
 import Header from './Header';
 import Cta from './Cta';
+import Container from './Container';
 
 // TODO need to make sure we await camera permissions? didn't work correctly first time when asking for camera permissions
 // maybe ask for camera roll permissions at startup?
+
 const GrayscaledImage = (imageProps) => (
   <Grayscale>
     <Image {...imageProps} />
@@ -51,14 +54,17 @@ const CombinedFiltersImage = (imageProps) => (
   </Tint>
 );
 
-const ColorMatrixImage = (imageProps) => (
-  <ColorMatrix
-    matrix={concatColorMatrices([saturate(-0.9), contrast(5.2), invert()])}
-    // alt: matrix={[saturate(-0.9), contrast(5.2), invert()]}
-  >
-    <Image {...imageProps} />
-  </ColorMatrix>
-);
+const ColorMatrixImage = (imageProps, filterData) => {
+  console.log('ColorMatrixImage', filterData);
+  const { contrastValue, saturationValue } = filterData;
+  return (
+    <ColorMatrix
+      matrix={concatColorMatrices([contrast(contrastValue), saturate(saturationValue)])}
+    >
+      <Image {...imageProps} />
+    </ColorMatrix>
+  );
+};
 
 // Issue popup with info about how to edit trace mode
 // https://kmagiera.github.io/react-native-gesture-handler/docs/handler-tap.html#minpointers
@@ -68,6 +74,17 @@ class TraceImage extends Component<Props> {
     image: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
+    filterData: PropTypes.shape({
+      contrastValue: PropTypes.string.isRequired,
+      saturationValue: PropTypes.string.isRequired,
+    }),
+  };
+
+  static defaultProps = {
+    filterData: {
+      contrastValue: 1,
+      saturationValue: 1,
+    },
   };
 
   //   state = {
@@ -95,16 +112,14 @@ class TraceImage extends Component<Props> {
   //   }
 
   renderImage = () => {
-    const { image, width, height } = this.props;
+    const { image, width, height, filterData } = this.props;
     const imageProps = {
       source: {
         uri: image,
       },
       style: { width, height } };
     return (
-      <SafeAreaView>
-        {ColorMatrixImage(imageProps)}
-      </SafeAreaView>
+      ColorMatrixImage(imageProps, filterData)
     );
   }
 

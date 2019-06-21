@@ -27,7 +27,7 @@ Navigation.events().registerAppLaunchedListener(() => {
         children: [
           {
             component: {
-              name: 'navigation.playground.StartScreen',
+              name: 'navigation.playground.TraceScreen',
               passProps: {
                 text: 'This is tab 1',
                 myFunction: () => 'Hello from a function!',
