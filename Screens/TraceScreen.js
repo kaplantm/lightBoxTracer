@@ -19,6 +19,8 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
+import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
+import FontAwesomeIcon from 'react-native-vector-icons/dist/FontAwesome';
 import theme from '../utils/theme';
 import withSafeArea from '../utils/withSafeArea';
 import colors from '../utils/colors';
@@ -102,10 +104,11 @@ class TraceScreen extends Component<Props> {
               height: -4,
             } }, theme.noFlex, theme.padded]}
         >
-          <Text>Rr</Text>
-          <Text>Rl</Text>
-          <Text>Mh</Text>
-          <Text>Mv</Text>
+
+          <FontAwesomeIcon name="lock" size={30} color={colors.slate} />
+          <FontAwesomeIcon name="unlock-alt" size={30} color={colors.slate} />
+          <MaterialIcon name="rotate-left" size={30} color={colors.slate} />
+          <MaterialIcon name="flip" size={30} color={colors.slate} />
         </Container>
         <SliderComponent
           onValueChange={(value) => this.onSliderChange('saturationValue', value)}
