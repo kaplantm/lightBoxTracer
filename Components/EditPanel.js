@@ -24,55 +24,24 @@ import FontAwesomeIcon from 'react-native-vector-icons/dist/FontAwesome';
 import theme from '../utils/theme';
 import withSafeArea from '../utils/withSafeArea';
 import colors from '../utils/colors';
-import Header from '../Components/Header';
-import Cta from '../Components/Cta';
-import TraceImage from '../Components/TraceImage';
-import Container from '../Components/Container';
-import SliderComponent from '../Components/SliderComponent';
-import PinchableBox from '../Components/PinchableBox';
-import EditPanel from '../Components/EditPanel';
+import Header from './Header';
+import Cta from './Cta';
+import TraceImage from './TraceImage';
+import Container from './Container';
+import SliderComponent from './SliderComponent';
+import PinchableBox from './PinchableBox';
 
 // Issue popup with info about how to edit trace mode
 // https://kmagiera.github.io/react-native-gesture-handler/docs/handler-tap.html#minpointers
 type Props = {};
-class TraceScreen extends Component<Props> {
+class EditPanel extends Component<Props> {
   static propTypes = {
-    navigationParams: PropTypes.shape({
-      image: PropTypes.string.isRequired,
-    }),
+    onSliderChange: PropTypes.func,
   };
 
-  state = {
-    imageViewHeight: undefined,
-    imageViewWidth: undefined,
-    image: undefined,
-    saturationValue: 1,
-    contrastValue: 1,
-    brightnessValue: 1,
-  }
-
-  onLayout = (event) => {
-    const { width, height } = event.nativeEvent.layout;
-    const { navigationParams } = this.props;
-    const image = navigationParams ? navigationParams.image : null;
-
-    this.setState({
-      imageViewHeight: height,
-      imageViewWidth: width,
-      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/440px-Ash_Tree_-_geograph.org.uk_-_590710.jpg',
-    });
-  }
-
-  renderLoading = () => {
-    return (
-      <Text>Loading...</Text>
-    );
-  }
-
-  onSliderChange = (stateKey, value) => {
-    this.setState({
-      [stateKey]: value,
-    });
+  get onSliderChange() {
+    const { onSliderChange } = this.props;
+    return onSliderChange;
   }
 
   getFilterData = () => {
@@ -117,16 +86,35 @@ class TraceScreen extends Component<Props> {
 
   render() {
     return (
-      <Container style={theme.pageContainer}>
-        <Container styles={[theme.contentContainer]} onLayout={this.onLayout}>
-          <PinchableBox>
-            {this.getTraceImage()}
-          </PinchableBox>
+      <Container>
+        <Container styles={[
+          { flexDirection: 'row',
+            borderWidth: 5,
+            backgroundColor: 'hsla(0, 0%, 90%, 1)',
+            borderBottomWidth: 0,
+            borderColor: 'hsla(0, 0%, 90%, 1)',
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            marginTop: -20,
+            justifyContent: 'space-around',
+          }, theme.shaded, {
+            shadowOffset: {
+              width: 0,
+              height: -4,
+            } }, theme.noFlex, theme.padded]}
+        >
+
+          <FontAwesomeIcon name="lock" size={30} color={colors.slate} />
+          <FontAwesomeIcon name="unlock-alt" size={30} color={colors.slate} />
+          <MaterialIcon name="rotate-left" size={30} color={colors.slate} />
+          <MaterialIcon name="flip" size={30} color={colors.slate} />
         </Container>
-        <EditPanel onSliderChange={this.onSliderChange} />
+        {this.getSlider('saturationValue', 'Saturation')}
+        {this.getSlider('contrastValue', 'Contrast')}
+        {this.getSlider('brightnessValue', 'Brightness')}
       </Container>
     );
   }
 }
 
-export default withSafeArea(TraceScreen);
+export default EditPanel;
