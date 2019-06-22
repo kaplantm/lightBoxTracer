@@ -1,9 +1,8 @@
 import React from 'react';
 import { Animated, StyleSheet, Text, View, Image } from 'react-native';
 import {
-  PanGestureHandler,
+  LongPressGestureHandler,
   PinchGestureHandler,
-  RotationGestureHandler,
   State,
 } from 'react-native-gesture-handler';
 
@@ -13,7 +12,7 @@ import TraceImage from './TraceImage';
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'black',
+    // backgroundColor: 'black',
     overflow: 'hidden',
     alignItems: 'center',
     flex: 1,
@@ -99,25 +98,48 @@ export class PinchableBox extends React.Component {
   };
 
   render() {
-    const { children } = this.props;
+    const { children, onLongPress, touchable } = this.props;
 
     return (
-      <PinchGestureHandler
-        ref={this.pinchRef}
-        simultaneousHandlers={this.rotationRef}
-        onGestureEvent={this.onPinchGestureEvent}
-        onHandlerStateChange={this.onPinchHandlerStateChange}
-      >
-        <Animated.View
-          style={[styles.container, { transform: [
-            { scale: this.scale },
-          ] },
-          ]}
-          collapsable={false}
+
+      touchable ? (
+        <LongPressGestureHandler
+          onHandlerStateChange={({ nativeEvent }) => {
+            if (nativeEvent.state === State.ACTIVE) {
+              onLongPress && onLongPress();
+            }
+          }}
+          minDurationMs={200}
         >
-          {children}
-        </Animated.View>
-      </PinchGestureHandler>
+          <Animated.View
+            style={[styles.container, { transform: [
+              { scale: this.scale },
+            ] },
+            ]}
+            collapsable={false}
+          >
+            <PinchGestureHandler
+              ref={this.pinchRef}
+              simultaneousHandlers={this.rotationRef}
+              onGestureEvent={this.onPinchGestureEvent}
+              onHandlerStateChange={this.onPinchHandlerStateChange}
+            >
+              <Animated.View
+                style={[styles.container, { zIndex: -1,
+                  transform: [
+                    { scale: this.scale },
+                  ] },
+                ]}
+                collapsable={false}
+              >
+                {children}
+              </Animated.View>
+            </PinchGestureHandler>
+
+          </Animated.View>
+        </LongPressGestureHandler>
+      )
+        : <View>{ children }</View>
     );
   }
 }

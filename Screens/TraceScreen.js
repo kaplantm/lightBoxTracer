@@ -16,11 +16,13 @@ import {
   ImagePickerIOS,
   Dimensions,
   Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
 import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/dist/FontAwesome';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import theme from '../utils/theme';
 import withSafeArea from '../utils/withSafeArea';
 import colors from '../utils/colors';
@@ -49,6 +51,8 @@ class TraceScreen extends Component<Props> {
     saturationValue: 1,
     contrastValue: 1,
     brightnessValue: 1,
+    showingSelectMode: false,
+    showingEditMode: false,
   }
 
   onLayout = (event) => {
@@ -115,15 +119,94 @@ class TraceScreen extends Component<Props> {
     );
   }
 
+  setStateByObject = (object) => {
+    console.log('setStateByObject', object);
+    object && this.setState(object);
+  }
+
+  // TODO change container styles to style
   render() {
+    const { showingSelectMode, showingEditMode } = this.state;
+    const firstIcon = showingSelectMode ? 'image' : 'rotate-left';
+    const secondIcon = showingSelectMode ? 'zoom-out-map' : 'flip';
+    const touchable = !showingSelectMode && !showingEditMode;
+
     return (
       <Container style={theme.pageContainer}>
+        {/* This view prevents the image from showing out of the safeArea when scaled */}
+        <View style={{ backgroundColor: colors.offWhite, height: 100, marginTop: -100, zIndex: 10 }} />
         <Container styles={[theme.contentContainer]} onLayout={this.onLayout}>
-          <PinchableBox>
+          <PinchableBox onLongPress={() => this.setStateByObject({ showingSelectMode: true, showingEditMode: false })} touchable={touchable}>
             {this.getTraceImage()}
           </PinchableBox>
         </Container>
-        <EditPanel onSliderChange={this.onSliderChange} />
+        {(showingSelectMode || showingEditMode) && (
+          <Container styles={[{ position: 'absolute', top: 0, left: 0, right: 0, backgroundColor: 'red' }, theme.noFlex]}>
+            <Container styles={[{ position: 'absolute', top: 20, left: 10, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
+              <TouchableOpacity onPress={() => this.setStateByObject({ showingSelectMode: false, showingEditMode: true })}>
+                <MaterialIcon
+                  name={firstIcon}
+                  size={50}
+                  color={colors.white}
+                  style={[theme.shaded, {
+                    opacity: 0.8,
+                    shadowOpacity: 0.5,
+                    shadowOffset: {
+                      width: 2,
+                      height: 2,
+                    } }]}
+                />
+              </TouchableOpacity>
+            </Container>
+            <Container styles={[{ position: 'absolute', top: 20, left: 80, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
+              <MaterialIcon
+                name={secondIcon}
+                size={50}
+                color={colors.white}
+                style={[theme.shaded, {
+                  opacity: 0.8,
+                  shadowOpacity: 0.5,
+                  shadowOffset: {
+                    width: 2,
+                    height: 2,
+                  } }]}
+              />
+            </Container>
+            <Container styles={[{ position: 'absolute', top: 20, right: 80, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
+              <MaterialIcon
+                name="undo"
+                size={50}
+                color={colors.white}
+                style={[theme.shaded, {
+                  opacity: 0.8,
+                  shadowOpacity: 0.5,
+                  shadowOffset: {
+                    width: 2,
+                    height: 2,
+                  } }]}
+              />
+            </Container>
+            <Container styles={[{ position: 'absolute', top: 20, right: 20, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
+              <MaterialIcon
+                name="close"
+                size={50}
+                color={colors.white}
+                style={[theme.shaded, {
+                  opacity: 0.8,
+                  shadowOpacity: 0.5,
+                  shadowOffset: {
+                    width: 2,
+                    height: 2,
+                  } }]}
+              />
+            </Container>
+          </Container>
+        )}
+
+        {showingEditMode && <EditPanel onSliderChange={this.onSliderChange} />}
+
+        {/* This view prevents the image from showing out of the safeArea when scaled */}
+        <View style={{ backgroundColor: colors.offWhite, height: 100, marginBottom: -100, zIndex: 10 }} />
       </Container>
     );
   }

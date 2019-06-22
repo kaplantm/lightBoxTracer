@@ -86,29 +86,18 @@ class EditPanel extends Component<Props> {
 
   render() {
     return (
-      <Container>
-        <Container styles={[
-          { flexDirection: 'row',
-            borderWidth: 5,
-            backgroundColor: 'hsla(0, 0%, 90%, 1)',
-            borderBottomWidth: 0,
-            borderColor: 'hsla(0, 0%, 90%, 1)',
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            marginTop: -20,
-            justifyContent: 'space-around',
-          }, theme.shaded, {
-            shadowOffset: {
-              width: 0,
-              height: -4,
-            } }, theme.noFlex, theme.padded]}
-        >
-
-          <FontAwesomeIcon name="lock" size={30} color={colors.slate} />
-          <FontAwesomeIcon name="unlock-alt" size={30} color={colors.slate} />
-          <MaterialIcon name="rotate-left" size={30} color={colors.slate} />
-          <MaterialIcon name="flip" size={30} color={colors.slate} />
-        </Container>
+      <Container styles={[
+        { backgroundColor: colors.offWhite,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          marginTop: -20,
+        }, theme.shaded, {
+          shadowOffset: {
+            width: 0,
+            height: -4,
+          } }, theme.noFlex, theme.padded]}
+      >
+        {/* //TODO: add reset button next to each slide */}
         {this.getSlider('saturationValue', 'Saturation')}
         {this.getSlider('contrastValue', 'Contrast')}
         {this.getSlider('brightnessValue', 'Brightness')}
