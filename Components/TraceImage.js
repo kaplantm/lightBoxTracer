@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 import PropTypes from 'prop-types';
@@ -32,8 +24,6 @@ const ColorMatrixImage = (imageProps, filterData) => {
   );
 };
 
-// TODO Issue popup with info about how to edit trace mode
-// https://kmagiera.github.io/react-native-gesture-handler/docs/handler-tap.html#minpointers
 type Props = {};
 class TraceImage extends Component<Props> {
   static propTypes = {
@@ -71,9 +61,9 @@ class TraceImage extends Component<Props> {
       source: {
         uri: image,
       },
-
       resizeMode: 'contain',
       style: {
+        marginTop: rotation % 180 ? 20 : 0,
         width: widthPostRotation,
         height: heightPostRotation,
         transform: [{ scaleX: scale }, { rotate: rotateValue }],

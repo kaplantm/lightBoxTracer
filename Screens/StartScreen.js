@@ -7,12 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  Button,
-  ImagePickerIOS,
-} from 'react-native';
+import { Text, View, ImagePickerIOS } from 'react-native';
 import PropTypes from 'prop-types';
 import { Navigation } from 'react-native-navigation';
 import theme from '../utils/theme';
@@ -34,6 +29,7 @@ class StartScreen extends Component<Props> {
       imageUri => {
         this.onClickLoadImage(imageUri);
       },
+      // eslint-disable-next-line no-console
       () => console.log('Cancelled'),
     );
   }
@@ -59,7 +55,6 @@ class StartScreen extends Component<Props> {
         <View style={theme.contentContainer}>
           <Header />
           <Text style={theme.bodyText}>Select an image to trace.</Text>
-          <Button title="Push" onPress={this.onClickLoadImage} />
           <Cta text="Load Image" action={this.pickImage} />
           {/* {this.state.image?
           <Image style={{ width: 50, height: 50 }} source={{ uri: this.state.image }} /> :

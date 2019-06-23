@@ -1,31 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, { Component } from 'react';
-import {
-  Platform,
-  Text,
-  View,
-  Button,
-  SafeAreaView,
-  ImagePickerIOS,
-  Dimensions,
-  Image,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
-import { Navigation } from 'react-native-navigation';
-import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
-import FontAwesomeIcon from 'react-native-vector-icons/dist/FontAwesome';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import theme from '../utils/theme';
 import colors from '../utils/colors';
-import Container from './Container';
 import IconButton from './IconButton';
 
 const ImageOverlayButtons = (props) => {
@@ -34,15 +11,11 @@ const ImageOverlayButtons = (props) => {
   const resetModesState = { showingSelectMode: false, showingEditMode: false, showingScaleMode: false };
 
   const onClickEdit = () => {
-    setStateByObject({ ...resetModesState, showingEditMode: true, shouldUpdateLayout: true });
+    setStateByObject({ ...resetModesState, showingEditMode: true });
   };
 
   const onClickClose = () => {
-    const updateFunction = (state) => {
-      const shouldUpdateLayout = state.showingEditMode;
-      return { ...resetModesState, shouldUpdateLayout };
-    };
-    setStateByFunction(updateFunction);
+    setStateByObject(resetModesState);
   };
 
   const onClickReset = () => {

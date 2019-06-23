@@ -1,38 +1,20 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from 'react';
-import {
-  Platform,
-  Text,
-  View,
-  Button,
-  SafeAreaView,
-  ImagePickerIOS,
-  Dimensions,
-  Image,
-} from 'react-native';
 import PropTypes from 'prop-types';
-import { Navigation } from 'react-native-navigation';
-import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
-import FontAwesomeIcon from 'react-native-vector-icons/dist/FontAwesome';
 import theme from '../utils/theme';
 import colors from '../utils/colors';
 import TraceImage from './TraceImage';
 import Container from './Container';
 import SliderComponent from './SliderComponent';
 
-// Issue popup with info about how to edit trace mode
-// https://kmagiera.github.io/react-native-gesture-handler/docs/handler-tap.html#minpointers
 type Props = {};
 class EditPanel extends Component<Props> {
   static propTypes = {
     onSliderChange: PropTypes.func,
+    sliderValues: PropTypes.shape({
+      saturationValue: PropTypes.number,
+      contrastValue: PropTypes.number,
+      brightnessValue: PropTypes.number,
+    }),
   };
 
   get onSliderChange() {
@@ -66,12 +48,14 @@ class EditPanel extends Component<Props> {
   }
 
   getSlider = (stateKey, label) => {
+    const { sliderValues } = this.props;
+    const { [stateKey]: initialValue } = sliderValues;
     return (
       <SliderComponent
         onValueChange={(value) => this.onSliderChange(stateKey, value)}
         label={label}
         style={{ width: '100%' }}
-        value={1}
+        value={initialValue}
         minimumValue={0}
         maximumValue={3}
         minimumTrackTintColor="#FFFFFF"
@@ -93,7 +77,6 @@ class EditPanel extends Component<Props> {
             height: -4,
           } }, theme.noFlex, theme.padded]}
       >
-        {/* //TODO: add reset button next to each slide */}
         {this.getSlider('saturationValue', 'Saturation')}
         {this.getSlider('contrastValue', 'Contrast')}
         {this.getSlider('brightnessValue', 'Brightness')}

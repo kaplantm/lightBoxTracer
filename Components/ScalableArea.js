@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ScrollView } from 'react-native';
 import theme from '../utils/theme';
 
@@ -21,6 +22,11 @@ const ScalableArea = (props) => {
       {children}
     </ScrollView>
   );
+};
+
+ScalableArea.propTypes = {
+  scalable: PropTypes.bool,
+  children: PropTypes.node,
 };
 
 
