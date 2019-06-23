@@ -3,14 +3,14 @@ import { Animated, StyleSheet, Text, View, Image, Dimensions, ScrollView } from 
 import Container from './Container';
 
 const ScalableArea = (props) => {
-  const { children } = props;
+  const { children, scalable } = props;
 
-  // console.log(' pan render', this.touchX);
   return (
     <ScrollView
+      scrollEnabled={scalable}
+      pinchGestureEnabled={scalable}
       maximumZoomScale={2.5}
       minimumZoomScale={1.0}
-      pinchGestureEnabled
     >
       <Container>
         {children}

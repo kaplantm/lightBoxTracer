@@ -40,6 +40,8 @@ class TraceImage extends Component<Props> {
     image: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
+    flipped: PropTypes.bool,
+    rotation: PropTypes.number,
     filterData: PropTypes.shape({
       contrastValue: PropTypes.number.isRequired,
       saturationValue: PropTypes.number.isRequired,
@@ -48,6 +50,8 @@ class TraceImage extends Component<Props> {
   };
 
   static defaultProps = {
+    flipped: false,
+    rotation: 0,
     filterData: {
       contrastValue: 1,
       saturationValue: 1,
@@ -56,12 +60,19 @@ class TraceImage extends Component<Props> {
   };
 
   renderImage = () => {
-    const { image, width, height, filterData } = this.props;
+    // TODO: reset also needs to reset rotation
+    const { image, width, height, filterData, flipped, rotation } = this.props;
+    const scale = flipped ? -1 : 1;
+    const rotateValue = `${rotation % 360}deg`;
+    const scaleDiection = 'scaleX';
+    // rotateValue % 90 ? 'scaleY' : 'scaleX';
+
+    console.log({ flipped, rotation, scale, scaleDiection, rotateValue });
     const imageProps = {
       source: {
         uri: image,
       },
-      style: { width, height } };
+      style: { width, height, transform: [{ [scaleDiection]: scale }, { rotate: rotateValue }] } };
     return (
       ColorMatrixImage(imageProps, filterData)
     );

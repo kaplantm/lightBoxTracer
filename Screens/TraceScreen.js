@@ -55,18 +55,25 @@ class TraceScreen extends Component<Props> {
     showingSelectMode: false,
     showingEditMode: false,
     showingScaleMode: false,
+    flipped: false,
+    rotation: 0,
+    shouldUpdateLayout: true,
   }
 
   onLayout = (event) => {
     const { width, height } = event.nativeEvent.layout;
     const { navigationParams } = this.props;
     const image = navigationParams ? navigationParams.image : null;
+    const { shouldUpdateLayout } = this.state;
 
-    this.setState({
-      imageViewHeight: height,
-      imageViewWidth: width,
-      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/440px-Ash_Tree_-_geograph.org.uk_-_590710.jpg',
-    });
+
+    if (shouldUpdateLayout) {
+      this.setState({
+        imageViewHeight: height,
+        imageViewWidth: width,
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/440px-Ash_Tree_-_geograph.org.uk_-_590710.jpg',
+      });
+    }
   }
 
   renderLoading = () => {
@@ -91,11 +98,13 @@ class TraceScreen extends Component<Props> {
   }
 
   getTraceImage = () => {
-    const { image, imageViewWidth, imageViewHeight } = this.state;
+    const { image, imageViewWidth, imageViewHeight, flipped, rotation } = this.state;
     return (
       image
         ? (
           <TraceImage
+            flipped={flipped}
+            rotation={rotation}
             image={image}
             height={imageViewHeight}
             width={imageViewWidth}
@@ -125,29 +134,42 @@ class TraceScreen extends Component<Props> {
     object && this.setState(object);
   }
 
+  setStateByFunction = (updateFunction) => {
+    try {
+      this.setState((state) => updateFunction(state));
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn('Failed to update state via setStateByFunction.');
+    }
+  }
+
   onLongImagePress = () => {
     this.setStateByObject({ showingSelectMode: true, showingEditMode: false, showingScaleMode: false });
+  }
+
+  get tappable() {
+    const { showingSelectMode, showingEditMode, showingScaleMode, image } = this.state;
+    return image && !showingSelectMode && !showingEditMode && !showingScaleMode;
   }
 
   // TODO change container styles to style
   render() {
     const { showingSelectMode, showingEditMode, showingScaleMode } = this.state;
-    const tappable = !showingSelectMode && !showingEditMode;
-    const scalable = !showingSelectMode && !showingEditMode;
 
     return (
       <Container style={theme.pageContainer}>
         {/* This view prevents the image from showing out of the safeArea when scaled */}
         <Container styles={[theme.contentContainer, theme.unpadded]} onLayout={this.onLayout}>
-          <TraceImageContainer onLongPress={this.onLongImagePress} tappable={tappable} scalable={scalable}>
+          <TraceImageContainer onLongPress={this.onLongImagePress} tappable={this.tappable} scalable={showingScaleMode}>
             {this.getTraceImage()}
           </TraceImageContainer>
         </Container>
-        {(showingSelectMode || showingEditMode)
+        {(showingSelectMode || showingEditMode || showingScaleMode)
         && (
         <ImageOverlayButtons
           showingSelectMode={showingSelectMode}
           showingScaleMode={showingScaleMode}
+          setStateByFunction={this.setStateByFunction}
           setStateByObject={this.setStateByObject}
         />
         ) }

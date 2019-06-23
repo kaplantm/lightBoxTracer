@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { isPatternLike } from '@babel/types';
 import colors from './colors';
 
 const themeBits = {
@@ -8,11 +9,25 @@ const themeBits = {
   flex: {
     flex: 1,
   },
+  posAbsolute: {
+    position: 'absolute', top: 0, left: 0, right: 0,
+  },
+  absoluteFull: {
+    position: 'absolute',
+    bottom: 0,
+    top: 0,
+    left: 0,
+    right: 0,
+  },
   padded: {
     padding: 20,
   },
   unpadded: {
     padding: 0,
+  },
+  bordered: {
+    borderWidth: 2,
+    borderColor: 'red',
   },
   centerText: {
     textAlign: 'center',
@@ -108,6 +123,15 @@ const theme = StyleSheet.create({
   },
   safeArea: {
     backgroundColor: colors.offWhite,
+  },
+  imageOverlayButton: {
+    ...themeBits.shaded,
+    opacity: 0.8,
+    shadowOpacity: 0.5,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
   },
 });
 

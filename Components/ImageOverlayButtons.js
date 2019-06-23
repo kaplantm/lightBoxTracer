@@ -26,20 +26,23 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import theme from '../utils/theme';
 import colors from '../utils/colors';
 import Container from './Container';
-// Issue popup with info about how to edit trace mode
-// https://kmagiera.github.io/react-native-gesture-handler/docs/handler-tap.html#minpointers
-// TODO convert to functional compoment
-type Props = {};
-const ImageOverlayButtons = (props) => {
-  const { setStateByObject, showingSelectMode } = props;
-  const resetState = { showingSelectMode: false, showingEditMode: false, showingScaleMode: true };
+import IconButton from './IconButton';
 
-  const onClickEditMode = () => {
-    setStateByObject({ ...resetState, showingEditMode: true });
+const ImageOverlayButtons = (props) => {
+  const { setStateByObject, setStateByFunction } = props;
+
+  const resetModesState = { showingSelectMode: false, showingEditMode: false, showingScaleMode: false };
+
+  const onClickEdit = () => {
+    setStateByObject({ ...resetModesState, showingEditMode: true, shouldUpdateLayout: true });
   };
 
   const onClickClose = () => {
-    setStateByObject(resetState);
+    const updateFunction = (state) => {
+      const shouldUpdateLayout = state.showingEditMode;
+      return { ...resetModesState, shouldUpdateLayout };
+    };
+    setStateByFunction(updateFunction);
   };
 
   const onClickReset = () => {
@@ -47,93 +50,96 @@ const ImageOverlayButtons = (props) => {
       saturationValue: 1,
       contrastValue: 1,
       brightnessValue: 1,
+      flipped: false,
+      rotation: 0,
     });
   };
 
   const onClickScale = () => {
-    setStateByObject({ ...resetState, showingScaleMode: true });
+    setStateByObject({ ...resetModesState, showingScaleMode: true });
   };
-  // const onClickRotate= () => {
-  //   setStateByObject({ showingSelectMode: false, showingEditMode: true });
-  // };
-  // const onClickMirror = () => {
-  //   setStateByObject({ showingSelectMode: false, showingEditMode: true });
-  // };
-  // TODO change container styles to style
-  const firstIcon = showingSelectMode ? 'image' : 'rotate-left';
-  const secondIcon = showingSelectMode ? 'zoom-out-map' : 'flip';
+  const onClickRotate = () => {
+    const updateFunction = (state) => ({
+      rotation: (state.rotation + 90) % 360,
+    });
+    setStateByFunction(updateFunction);
+  };
+  const onClickMirror = () => {
+    const updateFunction = (state) => ({
+      flipped: !state.flipped,
+    });
+    setStateByFunction(updateFunction);
+  };
+
+  const closeButton = {
+    icon: 'close',
+    onPress: onClickClose,
+  };
+  const resetButton = {
+    icon: 'settings-backup-restore',
+    onPress: onClickReset,
+  };
+  const scaleButton = {
+    icon: 'zoom-out-map',
+    onPress: onClickScale,
+  };
+  const editButton = {
+    icon: 'image',
+    onPress: onClickEdit,
+  };
+  const mirrorButton = {
+    icon: 'flip',
+    onPress: onClickMirror,
+  };
+  const rotateButton = {
+    icon: 'rotate-left',
+    onPress: onClickRotate,
+  };
+
+
+  const getButtonsDefinition = () => {
+    const { showingSelectMode, showingScaleMode } = props;
+    let buttons = [];
+
+    if (showingSelectMode) {
+      buttons = [editButton, scaleButton, closeButton];
+    } else if (showingScaleMode) {
+      buttons = [closeButton];
+    } else {
+      buttons = [rotateButton, mirrorButton, resetButton, closeButton];
+    }
+
+    return buttons;
+  };
+
+  const getButtons = () => {
+    const { buttonsDefinition } = props;
+    const buttonsArray = buttonsDefinition || getButtonsDefinition();
+    return buttonsArray.map((button, index) => {
+      const { icon } = button;
+      const alignEnd = index === buttonsArray.length - 1;
+      return <IconButton {...button} key={icon} alignEnd={alignEnd} />;
+    });
+  };
 
   return (
-    <Container styles={[{ position: 'absolute', top: 0, left: 0, right: 0, backgroundColor: 'red' }, theme.noFlex]}>
-      <Container styles={[{ position: 'absolute', top: 20, left: 10, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
-        <TouchableOpacity onPress={onClickEditMode}>
-          <MaterialIcon
-            name={firstIcon}
-            size={50}
-            color={colors.white}
-            style={[theme.shaded, {
-              opacity: 0.8,
-              shadowOpacity: 0.5,
-              shadowOffset: {
-                width: 2,
-                height: 2,
-              } }]}
-          />
-        </TouchableOpacity>
-      </Container>
-      <Container styles={[{ position: 'absolute', top: 20, left: 80, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
-        <MaterialIcon
-          name={secondIcon}
-          size={50}
-          color={colors.white}
-          style={[theme.shaded, {
-            opacity: 0.8,
-            shadowOpacity: 0.5,
-            shadowOffset: {
-              width: 2,
-              height: 2,
-            } }]}
-        />
-      </Container>
-      <Container styles={[{ position: 'absolute', top: 20, right: 80, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
-        <TouchableOpacity onPress={onClickReset}>
-          <MaterialIcon
-            name="settings-backup-restore"
-            size={50}
-            color={colors.white}
-            style={[theme.shaded, {
-              opacity: 0.8,
-              shadowOpacity: 0.5,
-              shadowOffset: {
-                width: 2,
-                height: 2,
-              } }]}
-          />
-        </TouchableOpacity>
-      </Container>
-      <Container styles={[{ position: 'absolute', top: 20, right: 20, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
-        <TouchableOpacity onPress={onClickClose}>
-          <MaterialIcon
-            name="close"
-            size={50}
-            color={colors.white}
-            style={[theme.shaded, {
-              opacity: 0.8,
-              shadowOpacity: 0.5,
-              shadowOffset: {
-                width: 2,
-                height: 2,
-              } }]}
-          />
-        </TouchableOpacity>
-      </Container>
-    </Container>
+    <View style={[theme.absoluteFull, theme.padded, { bottom: undefined,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    }]}
+    >
+      {getButtons()}
+    </View>
   );
 };
 
 ImageOverlayButtons.propTypes = {
+  setStateByFunction: PropTypes.func,
   setStateByObject: PropTypes.func,
   showingSelectMode: PropTypes.bool,
+  showingScaleMode: PropTypes.bool,
+  buttonsDefinition: PropTypes.arrayOf(PropTypes.object),
+
 };
 
 export default ImageOverlayButtons;
