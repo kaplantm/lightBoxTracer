@@ -5,6 +5,7 @@ const colors = {
   apricot: 'hsla(5, 58%, 65%, 1)',
   tan: 'hsla(22, 51%, 80%, 1)',
   slate: 'hsla(221, 25%, 35%, 1)',
+  slateTransparent: 'hsla(221, 25%, 35%, .25)',
 };
 
 export default colors;

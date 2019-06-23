@@ -60,19 +60,26 @@ class TraceImage extends Component<Props> {
   };
 
   renderImage = () => {
-    // TODO: reset also needs to reset rotation
     const { image, width, height, filterData, flipped, rotation } = this.props;
     const scale = flipped ? -1 : 1;
     const rotateValue = `${rotation % 360}deg`;
-    const scaleDiection = 'scaleX';
-    // rotateValue % 90 ? 'scaleY' : 'scaleX';
 
-    console.log({ flipped, rotation, scale, scaleDiection, rotateValue });
+    const widthPostRotation = (rotation % 180) ? height : width;
+    const heightPostRotation = (rotation % 180) ? width : height;
+
     const imageProps = {
       source: {
         uri: image,
       },
-      style: { width, height, transform: [{ [scaleDiection]: scale }, { rotate: rotateValue }] } };
+
+      resizeMode: 'contain',
+      style: {
+        width: widthPostRotation,
+        height: heightPostRotation,
+        transform: [{ scaleX: scale }, { rotate: rotateValue }],
+      },
+    };
+
     return (
       ColorMatrixImage(imageProps, filterData)
     );

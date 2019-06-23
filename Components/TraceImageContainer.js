@@ -1,19 +1,24 @@
 import React from 'react';
-import { Animated, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import LongPressableArea from './LongPressableArea';
 import ScalableArea from './ScalableArea';
 import Container from './Container';
+import theme from '../utils/theme';
 
 const TraceImageContainer = (props) => {
-  const { children, onLongPress, tappable, scalable } = props;
+  const { children, onLongPress, tappable, scalable, showingEditMode } = props;
   const onLongPressAction = tappable ? onLongPress : null;
-  return (
-    <ScalableArea scalable={scalable}>
-      <LongPressableArea onLongPress={onLongPressAction}>
-        {children}
-      </LongPressableArea>
-    </ScalableArea>
-  );
+
+  if (!showingEditMode) {
+    return (
+      <ScalableArea scalable={scalable}>
+        <LongPressableArea onLongPress={onLongPressAction}>
+          { children }
+        </LongPressableArea>
+      </ScalableArea>
+    );
+  } else {
+    return <Container styles={[theme.alignCenter]}>{children}</Container>;
+  }
 };
 
 

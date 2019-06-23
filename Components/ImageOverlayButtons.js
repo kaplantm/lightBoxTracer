@@ -123,7 +123,9 @@ const ImageOverlayButtons = (props) => {
   };
 
   return (
-    <View style={[theme.absoluteFull, theme.padded, { bottom: undefined,
+    <View style={[theme.absoluteFull, theme.padded, {
+      backgroundColor: colors.slateTransparent,
+      bottom: undefined,
       flexDirection: 'row',
       justifyContent: 'space-between',
     }]}

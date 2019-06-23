@@ -6,7 +6,6 @@ const withSafeArea = (Element, options = {}) => {
   const style = options.style || styles.safeArea;
   return class extends Component {
     render() {
-      console.log(this.props);
       return (
         <SafeAreaView style={{ flex: 1, ...style }}>
           <Element {...this.props} />

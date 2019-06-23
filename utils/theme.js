@@ -25,6 +25,12 @@ const themeBits = {
   unpadded: {
     padding: 0,
   },
+  margin: {
+    margin: 10,
+  },
+  noMargin: {
+    margin: 0,
+  },
   bordered: {
     borderWidth: 2,
     borderColor: 'red',
@@ -85,7 +91,6 @@ const theme = StyleSheet.create({
     ...themeBits.justifyCenter,
     ...themeBits.alignCenter,
     ...themeBits.shaded,
-    // flex: 1,
 
     backgroundColor: colors.white,
     // backgroundColor: 'red',

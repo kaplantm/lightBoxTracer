@@ -67,13 +67,13 @@ class TraceScreen extends Component<Props> {
     const { shouldUpdateLayout } = this.state;
 
 
-    if (shouldUpdateLayout) {
-      this.setState({
-        imageViewHeight: height,
-        imageViewWidth: width,
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/440px-Ash_Tree_-_geograph.org.uk_-_590710.jpg',
-      });
-    }
+    // if (shouldUpdateLayout) {
+    this.setState({
+      imageViewHeight: height,
+      imageViewWidth: width,
+      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/440px-Ash_Tree_-_geograph.org.uk_-_590710.jpg',
+    });
+    // }
   }
 
   renderLoading = () => {
@@ -159,8 +159,8 @@ class TraceScreen extends Component<Props> {
     return (
       <Container style={theme.pageContainer}>
         {/* This view prevents the image from showing out of the safeArea when scaled */}
-        <Container styles={[theme.contentContainer, theme.unpadded]} onLayout={this.onLayout}>
-          <TraceImageContainer onLongPress={this.onLongImagePress} tappable={this.tappable} scalable={showingScaleMode}>
+        <Container styles={[theme.contentContainer, theme.unpadded, { alignItems: 'stretch' }]} onLayout={this.onLayout}>
+          <TraceImageContainer onLongPress={this.onLongImagePress} tappable={this.tappable} scalable={showingScaleMode} showingEditMode={showingEditMode}>
             {this.getTraceImage()}
           </TraceImageContainer>
         </Container>
