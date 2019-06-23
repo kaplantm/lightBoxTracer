@@ -43,6 +43,7 @@ class TraceImage extends Component<Props> {
     filterData: PropTypes.shape({
       contrastValue: PropTypes.number.isRequired,
       saturationValue: PropTypes.number.isRequired,
+      brightnessValue: PropTypes.number.isRequired,
     }),
   };
 
@@ -50,6 +51,7 @@ class TraceImage extends Component<Props> {
     filterData: {
       contrastValue: 1,
       saturationValue: 1,
+      brightnessValue: 1,
     },
   };
 

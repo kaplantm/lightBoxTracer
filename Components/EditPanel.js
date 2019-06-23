@@ -22,14 +22,10 @@ import { Navigation } from 'react-native-navigation';
 import MaterialIcon from 'react-native-vector-icons/dist/MaterialIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/dist/FontAwesome';
 import theme from '../utils/theme';
-import withSafeArea from '../utils/withSafeArea';
 import colors from '../utils/colors';
-import Header from './Header';
-import Cta from './Cta';
 import TraceImage from './TraceImage';
 import Container from './Container';
 import SliderComponent from './SliderComponent';
-import PinchableBox from './PinchableBox';
 
 // Issue popup with info about how to edit trace mode
 // https://kmagiera.github.io/react-native-gesture-handler/docs/handler-tap.html#minpointers

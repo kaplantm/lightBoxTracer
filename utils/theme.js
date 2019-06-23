@@ -11,6 +11,9 @@ const themeBits = {
   padded: {
     padding: 20,
   },
+  unpadded: {
+    padding: 0,
+  },
   centerText: {
     textAlign: 'center',
   },

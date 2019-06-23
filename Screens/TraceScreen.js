@@ -31,8 +31,9 @@ import Cta from '../Components/Cta';
 import TraceImage from '../Components/TraceImage';
 import Container from '../Components/Container';
 import SliderComponent from '../Components/SliderComponent';
-import PinchableBox from '../Components/PinchableBox';
 import EditPanel from '../Components/EditPanel';
+import ImageOverlayButtons from '../Components/ImageOverlayButtons';
+import TraceImageContainer from '../Components/TraceImageContainer';
 
 // Issue popup with info about how to edit trace mode
 // https://kmagiera.github.io/react-native-gesture-handler/docs/handler-tap.html#minpointers
@@ -53,6 +54,7 @@ class TraceScreen extends Component<Props> {
     brightnessValue: 1,
     showingSelectMode: false,
     showingEditMode: false,
+    showingScaleMode: false,
   }
 
   onLayout = (event) => {
@@ -120,93 +122,37 @@ class TraceScreen extends Component<Props> {
   }
 
   setStateByObject = (object) => {
-    console.log('setStateByObject', object);
     object && this.setState(object);
+  }
+
+  onLongImagePress = () => {
+    this.setStateByObject({ showingSelectMode: true, showingEditMode: false, showingScaleMode: false });
   }
 
   // TODO change container styles to style
   render() {
-    const { showingSelectMode, showingEditMode } = this.state;
-    const firstIcon = showingSelectMode ? 'image' : 'rotate-left';
-    const secondIcon = showingSelectMode ? 'zoom-out-map' : 'flip';
-    const touchable = !showingSelectMode && !showingEditMode;
+    const { showingSelectMode, showingEditMode, showingScaleMode } = this.state;
+    const tappable = !showingSelectMode && !showingEditMode;
+    const scalable = !showingSelectMode && !showingEditMode;
 
     return (
       <Container style={theme.pageContainer}>
         {/* This view prevents the image from showing out of the safeArea when scaled */}
-        <View style={{ backgroundColor: colors.offWhite, height: 100, marginTop: -100, zIndex: 10 }} />
-        <Container styles={[theme.contentContainer]} onLayout={this.onLayout}>
-          <PinchableBox onLongPress={() => this.setStateByObject({ showingSelectMode: true, showingEditMode: false })} touchable={touchable}>
+        <Container styles={[theme.contentContainer, theme.unpadded]} onLayout={this.onLayout}>
+          <TraceImageContainer onLongPress={this.onLongImagePress} tappable={tappable} scalable={scalable}>
             {this.getTraceImage()}
-          </PinchableBox>
+          </TraceImageContainer>
         </Container>
-        {(showingSelectMode || showingEditMode) && (
-          <Container styles={[{ position: 'absolute', top: 0, left: 0, right: 0, backgroundColor: 'red' }, theme.noFlex]}>
-            <Container styles={[{ position: 'absolute', top: 20, left: 10, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
-              <TouchableOpacity onPress={() => this.setStateByObject({ showingSelectMode: false, showingEditMode: true })}>
-                <MaterialIcon
-                  name={firstIcon}
-                  size={50}
-                  color={colors.white}
-                  style={[theme.shaded, {
-                    opacity: 0.8,
-                    shadowOpacity: 0.5,
-                    shadowOffset: {
-                      width: 2,
-                      height: 2,
-                    } }]}
-                />
-              </TouchableOpacity>
-            </Container>
-            <Container styles={[{ position: 'absolute', top: 20, left: 80, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
-              <MaterialIcon
-                name={secondIcon}
-                size={50}
-                color={colors.white}
-                style={[theme.shaded, {
-                  opacity: 0.8,
-                  shadowOpacity: 0.5,
-                  shadowOffset: {
-                    width: 2,
-                    height: 2,
-                  } }]}
-              />
-            </Container>
-            <Container styles={[{ position: 'absolute', top: 20, right: 80, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
-              <MaterialIcon
-                name="undo"
-                size={50}
-                color={colors.white}
-                style={[theme.shaded, {
-                  opacity: 0.8,
-                  shadowOpacity: 0.5,
-                  shadowOffset: {
-                    width: 2,
-                    height: 2,
-                  } }]}
-              />
-            </Container>
-            <Container styles={[{ position: 'absolute', top: 20, right: 20, padding: 10, backgroundColor: colors.slateTransparent, borderWith: 5, borderColor: colors.offWhite, borderRadius: 10 }, theme.noFlex]}>
-              <MaterialIcon
-                name="close"
-                size={50}
-                color={colors.white}
-                style={[theme.shaded, {
-                  opacity: 0.8,
-                  shadowOpacity: 0.5,
-                  shadowOffset: {
-                    width: 2,
-                    height: 2,
-                  } }]}
-              />
-            </Container>
-          </Container>
-        )}
-
+        {(showingSelectMode || showingEditMode)
+        && (
+        <ImageOverlayButtons
+          showingSelectMode={showingSelectMode}
+          showingScaleMode={showingScaleMode}
+          setStateByObject={this.setStateByObject}
+        />
+        ) }
         {showingEditMode && <EditPanel onSliderChange={this.onSliderChange} />}
-
         {/* This view prevents the image from showing out of the safeArea when scaled */}
-        <View style={{ backgroundColor: colors.offWhite, height: 100, marginBottom: -100, zIndex: 10 }} />
       </Container>
     );
   }
