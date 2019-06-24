@@ -6,7 +6,7 @@ import colors from '../utils/colors';
 import IconButton from './IconButton';
 
 const ImageOverlayButtons = (props) => {
-  const { setStateByObject, setStateByFunction } = props;
+  const { setStateByObject, setStateByFunction, pop } = props;
 
   const resetModesState = { showingSelectMode: false, showingEditMode: false, showingScaleMode: false };
 
@@ -43,13 +43,20 @@ const ImageOverlayButtons = (props) => {
     });
     setStateByFunction(updateFunction);
   };
+  const onClickBack = () => {
+    pop();
+  };
 
+  const backButton = {
+    icon: 'arrow-back',
+    onPress: onClickBack,
+  };
   const closeButton = {
     icon: 'close',
     onPress: onClickClose,
   };
   const resetButton = {
-    icon: 'settings-backup-restore',
+    icon: 'layers-clear',
     onPress: onClickReset,
   };
   const scaleButton = {
@@ -75,7 +82,7 @@ const ImageOverlayButtons = (props) => {
     let buttons = [];
 
     if (showingSelectMode) {
-      buttons = [editButton, scaleButton, closeButton];
+      buttons = [backButton, editButton, scaleButton, closeButton];
     } else if (showingScaleMode) {
       buttons = [closeButton];
     } else {
@@ -109,6 +116,7 @@ const ImageOverlayButtons = (props) => {
 };
 
 ImageOverlayButtons.propTypes = {
+  pop: PropTypes.func,
   setStateByFunction: PropTypes.func,
   setStateByObject: PropTypes.func,
   showingSelectMode: PropTypes.bool,

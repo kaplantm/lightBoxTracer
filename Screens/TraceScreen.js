@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import PropTypes from 'prop-types';
 import theme from '../utils/theme';
 import withSafeArea from '../utils/withSafeArea';
@@ -15,6 +16,7 @@ class TraceScreen extends Component<Props> {
     navigationParams: PropTypes.shape({
       image: PropTypes.string.isRequired,
     }),
+    componentId: PropTypes.string.isRequired,
   };
 
   state = {
@@ -42,6 +44,11 @@ class TraceScreen extends Component<Props> {
       // eslint-disable-next-line max-len
       // image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/440px-Ash_Tree_-_geograph.org.uk_-_590710.jpg',
     });
+  }
+
+  pop = () => {
+    const { componentId } = this.props;
+    Navigation.pop(componentId);
   }
 
   renderLoading = () => {
@@ -135,6 +142,7 @@ class TraceScreen extends Component<Props> {
         {((showingSelectMode || showingEditMode || showingScaleMode))
         && (
         <ImageOverlayButtons
+          pop={this.pop}
           showingSelectMode={showingSelectMode}
           showingScaleMode={showingScaleMode}
           setStateByFunction={this.setStateByFunction}
