@@ -14,6 +14,7 @@
     "react-native": "0.59.9",
     "react-native-color-matrix-image-filters": "^5.1.5",
     "react-native-navigation": "^2.21.0-experimental.4",
+    "react-native-permissions": "^1.1.1",
     "react-native-vector-icons": "^6.5.0"
   },
   "devDependencies": {

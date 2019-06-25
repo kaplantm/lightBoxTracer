@@ -7,8 +7,7 @@ const LongPressableArea = (props) => {
 
   return (
 
-    <TouchableWithoutFeedback onLongPress={onLongPress} delayLongPress={5000}>
-      {/* <TouchableWithoutFeedback onPress={onLongPress}> */}
+    <TouchableWithoutFeedback onLongPress={onLongPress} delayLongPress={3000}>
       <View>
         {children}
       </View>

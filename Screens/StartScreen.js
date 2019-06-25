@@ -7,8 +7,9 @@
  */
 
 import React, { Component } from 'react';
-import { Text, View, ImagePickerIOS } from 'react-native';
+import { Text, View, ImagePickerIOS, Alert } from 'react-native';
 import PropTypes from 'prop-types';
+import Permissions from 'react-native-permissions';
 import { Navigation } from 'react-native-navigation';
 import theme from '../utils/theme';
 import withSafeArea from '../utils/withSafeArea';
@@ -22,19 +23,71 @@ class StartScreen extends Component<Props> {
     componentId: PropTypes.string,
   };
 
-  pickImage = () => {
-    // openSelectDialog(config, successCallback, errorCallback);
-    ImagePickerIOS.openSelectDialog(
-      {},
-      imageUri => {
-        this.onClickLoadImage(imageUri);
-      },
-      // eslint-disable-next-line no-console
-      () => console.log('Cancelled'),
-    );
+  state = {
+    photoPermission: 'undetermined',
   }
 
-  onClickLoadImage = async image => {
+  componentDidMount() {
+    Permissions.check('photo').then(response => {
+      // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+      this.setState({ photoPermission: response });
+    });
+  }
+
+  // Request permission to access photos
+  requestPermission = (callback) => {
+    Permissions.request('photo').then(response => {
+      // Returns once the user has chosen to 'allow' or to 'not allow' access
+      // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+      this.setState({ photoPermission: response }, () => {
+        callback();
+      });
+    });
+  }
+
+  alertForPhotosPermission() {
+    this.requestPermission();
+  }
+
+  onClickLoadImage = () => {
+    const { photoPermission } = this.state;
+
+    switch (photoPermission) {
+      case 'authorized':
+        this.pickImage();
+        break;
+      case 'undetermined':
+        this.requestPermission(this.pickImage);
+        break;
+      default:
+        Alert.alert('Cannot load image.', 'Lightbox Tracer does not have permission to access your photo library. ', [{
+          text: 'Cancel',
+          // eslint-disable-next-line no-console
+          onPress: () => console.log('Permission denied'),
+          style: 'cancel',
+        },
+        {
+          text: 'Open Settings',
+          onPress: Permissions.openSettings,
+        }]);
+    }
+  }
+
+  pickImage = () => {
+    const { photoPermission } = this.state;
+    if (photoPermission === 'authorized') {
+      ImagePickerIOS.openSelectDialog(
+        { showImages: true, showVideos: false },
+        (imageUri) => {
+          this.navigateToTraceImage(imageUri);
+        },
+        // eslint-disable-next-line no-console
+        () => console.log('Cancelled'),
+      );
+    }
+  };
+
+  navigateToTraceImage = async image => {
     const { componentId } = this.props;
     await Navigation.push(componentId, {
       component: {
@@ -55,11 +108,7 @@ class StartScreen extends Component<Props> {
         <View style={theme.contentContainer}>
           <Header />
           <Text style={theme.bodyText}>Select an image to trace.</Text>
-          <Cta text="Load Image" action={this.pickImage} />
-          {/* {this.state.image?
-          <Image style={{ width: 50, height: 50 }} source={{ uri: this.state.image }} /> :
-          null
-        } */}
+          <Cta text="Load Image" action={this.onClickLoadImage} />
         </View>
       </Container>
     );

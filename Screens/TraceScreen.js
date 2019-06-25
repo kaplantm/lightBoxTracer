@@ -83,7 +83,6 @@ class TraceScreen extends Component<Props> {
             onLongPress={this.onLongImagePress}
             tappable={this.tappable}
             scalable={showingScaleMode}
-            s
             howingEditMode={showingEditMode}
           >
             <TraceImage
