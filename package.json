@@ -1,5 +1,5 @@
 {
-  "name": "nativeNavigation",
+  "name": "LightboxTracer",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -15,6 +15,7 @@
     "react-native-color-matrix-image-filters": "^5.1.5",
     "react-native-navigation": "^2.21.0-experimental.4",
     "react-native-permissions": "^1.1.1",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-vector-icons": "^6.5.0"
   },
   "devDependencies": {

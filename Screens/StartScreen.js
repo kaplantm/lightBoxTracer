@@ -10,6 +10,7 @@ import React, { Component } from 'react';
 import { Text, View, ImagePickerIOS, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import Permissions from 'react-native-permissions';
+import SplashScreen from 'react-native-splash-screen';
 import { Navigation } from 'react-native-navigation';
 import theme from '../utils/theme';
 import withSafeArea from '../utils/withSafeArea';
@@ -32,6 +33,7 @@ class StartScreen extends Component<Props> {
       // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
       this.setState({ photoPermission: response });
     });
+    SplashScreen.hide();
   }
 
   // Request permission to access photos
