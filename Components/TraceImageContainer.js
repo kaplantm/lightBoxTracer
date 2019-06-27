@@ -3,7 +3,7 @@ import React from 'react';
 import ScalableArea from './ScalableArea';
 import Container from './Container';
 import theme from '../utils/theme';
-import DoubleTappableArea from './DoubleTappableArea';
+import TripleTappableArea from './TripleTappableArea';
 
 const TraceImageContainer = (props) => {
   const { children, onPress, tappable, scalable, showingEditMode } = props;
@@ -12,11 +12,11 @@ const TraceImageContainer = (props) => {
   if (!showingEditMode) {
     return (
       <ScalableArea scalable={scalable}>
-        <DoubleTappableArea onPress={onPressAction}>
+        <TripleTappableArea onPress={onPressAction}>
           {/* <LongPressableArea onLongPress={onLongPressAction}> */}
           { children }
           {/* </LongPressableArea> */}
-        </DoubleTappableArea>
+        </TripleTappableArea>
       </ScalableArea>
     );
   } else {
