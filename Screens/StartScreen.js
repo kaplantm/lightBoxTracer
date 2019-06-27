@@ -111,6 +111,17 @@ class StartScreen extends Component<Props> {
           <Header />
           <Text style={theme.bodyText}>Select an image to trace.</Text>
           <Cta text="Load Image" action={this.onClickLoadImage} />
+          <Container styles={[{ flex: 0.5, width: '70%', justifyContent: 'flex-end' }, theme.mediumVerticalMargins]}>
+            <Text style={[theme.bodyTextSmall, theme.smallVerticalMargins, theme.centerText, theme.mediumText]}>
+Load an image to trace.
+            </Text>
+            <Text style={[theme.bodyTextSmall, theme.smallVerticalMargins, theme.centerText, theme.mediumText]}>
+Triple tap the image to display controls for scaling and color filtering.
+            </Text>
+            <Text style={[theme.bodyTextSmall, theme.smallVerticalMargins, theme.centerText, theme.mediumText]}>
+Click the X button hide controls.
+            </Text>
+          </Container>
         </View>
       </Container>
     );

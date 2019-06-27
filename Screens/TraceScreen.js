@@ -40,9 +40,9 @@ class TraceScreen extends Component<Props> {
     this.setState({
       imageViewHeight: height,
       imageViewWidth: width,
-      // image,
+      image,
       // eslint-disable-next-line max-len
-      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/440px-Ash_Tree_-_geograph.org.uk_-_590710.jpg',
+      // image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/440px-Ash_Tree_-_geograph.org.uk_-_590710.jpg',
     });
   }
 
@@ -133,7 +133,7 @@ class TraceScreen extends Component<Props> {
     return (
       <Container style={theme.pageContainer}>
         <Container
-          styles={[theme.contentContainer, theme.unpadded, { alignItems: 'stretch' }]}
+          styles={[theme.contentContainer, theme.unpadded, { alignItems: 'stretch', backgroundColor: 'black' }]}
           onLayout={this.onLayout}
         >
           {this.getTraceImage()}
