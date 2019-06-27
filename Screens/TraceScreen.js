@@ -40,9 +40,9 @@ class TraceScreen extends Component<Props> {
     this.setState({
       imageViewHeight: height,
       imageViewWidth: width,
-      image,
+      // image,
       // eslint-disable-next-line max-len
-      // image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/440px-Ash_Tree_-_geograph.org.uk_-_590710.jpg',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/440px-Ash_Tree_-_geograph.org.uk_-_590710.jpg',
     });
   }
 
@@ -80,10 +80,10 @@ class TraceScreen extends Component<Props> {
       image
         ? (
           <TraceImageContainer
-            onLongPress={this.onLongImagePress}
+            onPress={this.onImagePress}
             tappable={this.tappable}
             scalable={showingScaleMode}
-            howingEditMode={showingEditMode}
+            showingEditMode={showingEditMode}
           >
             <TraceImage
               flipped={flipped}
@@ -112,7 +112,7 @@ class TraceScreen extends Component<Props> {
     }
   }
 
-  onLongImagePress = () => {
+  onImagePress = () => {
     this.setStateByObject({ showingSelectMode: true, showingEditMode: false, showingScaleMode: false });
   }
 

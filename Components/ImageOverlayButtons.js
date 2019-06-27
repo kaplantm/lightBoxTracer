@@ -1,9 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import theme from '../utils/theme';
 import colors from '../utils/colors';
-import IconButton from './IconButton';
+import GenericButton from './GenericButton';
 
 const ImageOverlayButtons = (props) => {
   const { setStateByObject, setStateByFunction, pop } = props;
@@ -75,6 +75,9 @@ const ImageOverlayButtons = (props) => {
     icon: 'rotate-left',
     onPress: onClickRotate,
   };
+  const scaleText = {
+    text: 'Scale',
+  };
 
 
   const getButtonsDefinition = () => {
@@ -84,7 +87,7 @@ const ImageOverlayButtons = (props) => {
     if (showingSelectMode) {
       buttons = [backButton, editButton, scaleButton, closeButton];
     } else if (showingScaleMode) {
-      buttons = [closeButton];
+      buttons = [scaleText, closeButton];
     } else {
       buttons = [rotateButton, mirrorButton, resetButton, closeButton];
     }
@@ -92,15 +95,15 @@ const ImageOverlayButtons = (props) => {
     return buttons;
   };
 
-  const getButtons = () => {
-    const { buttonsDefinition } = props;
-    const buttonsArray = buttonsDefinition || getButtonsDefinition();
-    return buttonsArray.map((button, index) => {
-      const { icon } = button;
-      const alignEnd = index === buttonsArray.length - 1;
-      return <IconButton {...button} key={icon} alignEnd={alignEnd} />;
-    });
-  };
+
+  const { buttonsDefinition } = props;
+  const buttonsArray = buttonsDefinition || getButtonsDefinition();
+
+  const buttonSet = buttonsArray.map((button, index) => {
+    const { icon, text } = button;
+    const alignEnd = index === buttonsArray.length - 1;
+    return <GenericButton {...button} key={icon || text} alignEnd={alignEnd} />;
+  });
 
   return (
     <View style={[theme.absoluteFull, theme.padded, {
@@ -110,7 +113,7 @@ const ImageOverlayButtons = (props) => {
       justifyContent: 'space-between',
     }]}
     >
-      {getButtons()}
+      {buttonSet}
     </View>
   );
 };

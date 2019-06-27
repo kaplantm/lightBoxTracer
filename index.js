@@ -2,14 +2,6 @@
 //  * @format
 //  */
 
-// import {AppRegistry} from 'react-native';
-// import App from './App';
-// import {name as appName} from './app.json';
-
-// AppRegistry.registerComponent(appName, () => App);
-
-// require('./Screens/index.js');
-
 import { Navigation } from 'react-native-navigation';
 import registerScreens from './Screens';
 
@@ -27,8 +19,8 @@ Navigation.events().registerAppLaunchedListener(() => {
         children: [
           {
             component: {
-              // name: 'navigation.playground.TraceScreen',
-              name: 'navigation.playground.StartScreen',
+              name: 'navigation.playground.TraceScreen',
+              // name: 'navigation.playground.StartScreen',
               passProps: {
                 text: 'This is tab 1',
                 myFunction: () => 'Hello from a function!',
